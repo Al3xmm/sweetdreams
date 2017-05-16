@@ -14,6 +14,8 @@
 #include "Personaje.hpp"
 #include "Sprite.hpp"
 #include <iostream>
+#include "Pocion.h"
+
 
 Personaje::Personaje(int id) {
     if(id==0){
@@ -22,16 +24,20 @@ Personaje::Personaje(int id) {
         std::string ruta("resources/Agony.png");
         idle= new Sprite(ruta, coordenadas, frames);
         idle->set_position(600, 320);
+        idle->set_framerate(120);
         int coordenadas2[24] = {38, 28, -31, 64, 70,28,-31,64,102,28,-29,64,135,27,-30,65,169, 27, -31, 65,203, 27, -31,65};
         idleleft = new Sprite(ruta, coordenadas2, frames);
         idleleft->set_position(600, 320);
+        idleleft->set_framerate(120);
         int coordenadas3[32] = {632, 131, 47, 59, 682,125, 42,65, 727,126,47,57,777,128,45,59,825,131,46,57,874,125,40,63,917,126,46,57,966,128,44,59};
         frames=8;
         moveright=new Sprite(ruta, coordenadas3, frames);
         moveright->set_position(600, 320);
+        moveright->set_framerate(100);
         int coordenadas4[32] = {679,131,-47,59, 724,125, -42, 65, 774, 126, -47, 57, 822,128,-45,59,871,131,-46,57,914,125,-40,63,963,126,-46,57,1010,128,-44,59};
         moveleft=new Sprite(ruta, coordenadas4, frames);
         moveleft->set_position(600,320);
+        moveleft->set_framerate(100);
     }
     else if(id==1){
         
@@ -41,6 +47,10 @@ Personaje::Personaje(int id) {
     sx=1.0;
     sy=1.0;
     direccion=1;
+    vidamax=200;
+    manamax=100;
+    vida=200;
+    mana=100;
 }
 
 Sprite* Personaje::render(int est){
@@ -70,7 +80,7 @@ Sprite* Personaje::render(int est){
 void Personaje::move(int i){
     if(i==1){
         direccion=1;
-        if(x<1153){
+        if(x<3083){
             x+=4;
         } 
     }
@@ -96,6 +106,103 @@ void Personaje::move(int i){
     }
 }
 
+/*void Personaje::usaPocion(std::string tipo){
+    
+    bool stop=false;
+    
+    for(int i=0; i<5; i++){
+        if(bolsilloP[i]!=NULL){
+            if(bolsilloP[i]->getTipo()=="mana"){
+                if(stop==false){
+                    bolsilloP[i]->recupera(this);
+                    stop=true;
+                }
+            }
+            else if(bolsilloP[i]->getTipo()=="vida"){
+                if(stop==false){
+                    bolsilloP[i]->recupera(this);
+                    stop=true;
+                }
+            }
+        }
+    }
+    
+}*/
+/*
+bool Personaje::cogeObjeto(){
+    
+    bool stop=false;
+    
+    for(int i=0; i<5; i++){
+        if(bolsilloP[i]==NULL){
+            if(stop==false){
+                bolsilloP[i]=p;
+                stop=true;
+                return true;
+            }
+        }
+    }
+    
+}*/
+
+//FUNCION HECHA PARA LAS PRUEBAS
+
+/*int Personaje::numeroPoc(){
+    
+    int num=0;
+    
+    for(int i=0; i<5; i++){
+        if(bolsilloP[i]!=NULL){
+            num++;
+        }
+    }
+    
+        return num;
+}*/
+
+//FUNCION HECHA PARA LAS PRUEBAS
+
 int Personaje::getDireccion(){
     return(direccion);
+}
+
+int Personaje::getXCoordinate(){
+    return(x);
+}
+
+int Personaje::getYCoordinate(){
+    return(y);
+}
+
+int Personaje::getManaMax(){
+    return manamax;
+}
+
+int Personaje::getVidaMax(){
+    return vidamax;
+}
+
+void Personaje::setMana(int i){
+    mana=i;
+}
+
+void Personaje::setVida(int i){
+    vida=i;
+}
+
+int Personaje::getMana(){
+    return mana;
+}
+
+int Personaje::getVida(){
+    return vida;
+}
+
+
+void Personaje::aumentarMargenDer(int i){
+    margen=margen+i;
+}
+
+void Personaje::aumentarMargenIzq(int i){
+    margen=margen-i;
 }
